@@ -245,7 +245,16 @@ export class PageAgentCore extends EventTarget {
 				// assemble prompts
 
 				const messages = [
-					{ role: 'system' as const, content: this.#getSystemPrompt() },
+					{
+						role: 'system' as const,
+						content: [
+							{
+								type: 'text' as const,
+								text: this.#getSystemPrompt(),
+								cache_control: { type: 'ephemeral' as const },
+							},
+						],
+					},
 					{ role: 'user' as const, content: await this.#assembleUserPrompt() },
 				]
 

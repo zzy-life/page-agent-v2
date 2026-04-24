@@ -4,11 +4,21 @@
 import type * as z from 'zod/v4'
 
 /**
+ * Content block for structured message content.
+ * Supports Anthropic's cache_control for prompt caching.
+ */
+export interface ContentBlock {
+	type: 'text'
+	text: string
+	cache_control?: { type: 'ephemeral' }
+}
+
+/**
  * Message format - OpenAI standard (industry standard)
  */
 export interface Message {
 	role: 'system' | 'user' | 'assistant' | 'tool'
-	content?: string | null
+	content?: string | ContentBlock[] | null
 	tool_calls?: {
 		id: string
 		type: 'function'
